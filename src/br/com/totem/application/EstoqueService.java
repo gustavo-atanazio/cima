@@ -1,7 +1,7 @@
-package br.com.almoxarifado.application;
+package br.com.totem.application;
 
-import br.com.almoxarifado.domain.*;
-import br.com.almoxarifado.infrastructure.FakeDatabase;
+import br.com.totem.domain.*;
+import br.com.totem.infrastructure.FakeDatabase;
 
 public class EstoqueService {
     private final Totem totem;

@@ -1,4 +1,4 @@
-package br.com.almoxarifado.domain;
+package br.com.totem.domain;
 
 public class Funcionario {
     private int id;

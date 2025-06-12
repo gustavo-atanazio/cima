@@ -1,9 +1,9 @@
-package br.com.almoxarifado.infrastructure;
+package br.com.totem.infrastructure;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.almoxarifado.domain.*;
+import br.com.totem.domain.*;
 
 public class FakeDatabase {
     private Map<Integer, Unidade> unidades = new HashMap<>();

@@ -1,4 +1,4 @@
-package br.com.almoxarifado.domain;
+package br.com.totem.domain;
 
 import java.util.ArrayList;
 import java.util.List;

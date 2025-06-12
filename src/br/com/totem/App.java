@@ -1,9 +1,9 @@
-package br.com.almoxarifado;
+package br.com.totem;
 
 import java.util.Scanner;
 
-import br.com.almoxarifado.application.EstoqueService;
-import br.com.almoxarifado.domain.*;
+import br.com.totem.application.EstoqueService;
+import br.com.totem.domain.*;
 
 public class App {
     public static void main(String[] args) {
