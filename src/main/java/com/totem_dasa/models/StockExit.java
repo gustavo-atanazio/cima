@@ -1,4 +1,4 @@
-package br.com.totem.models;
+package com.totem_dasa.models;
 
 import java.util.ArrayList;
 import java.util.List;

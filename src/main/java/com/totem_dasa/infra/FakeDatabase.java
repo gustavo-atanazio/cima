@@ -1,12 +1,12 @@
-package br.com.totem.infra;
+package com.totem_dasa.infra;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import br.com.totem.models.Employee;
-import br.com.totem.models.Supply;
-import br.com.totem.models.Totem;
-import br.com.totem.models.Unit;
+import com.totem_dasa.models.Employee;
+import com.totem_dasa.models.Supply;
+import com.totem_dasa.models.Totem;
+import com.totem_dasa.models.Unit;
 
 public class FakeDatabase {
   private Map<Integer, Unit> units = new HashMap<>();

@@ -1,15 +1,15 @@
-package br.com.totem;
+package com.totem_dasa;
 
 import java.util.Scanner;
 
-import br.com.totem.models.StockMovement;
-import br.com.totem.models.StockEntry;
-import br.com.totem.models.StockExit;
-import br.com.totem.models.SupplyMovement;
-import br.com.totem.models.Supply;
-import br.com.totem.models.Totem;
-import br.com.totem.models.Unit;
-import br.com.totem.services.StockService;
+import com.totem_dasa.models.StockMovement;
+import com.totem_dasa.models.StockEntry;
+import com.totem_dasa.models.StockExit;
+import com.totem_dasa.models.SupplyMovement;
+import com.totem_dasa.models.Supply;
+import com.totem_dasa.models.Totem;
+import com.totem_dasa.models.Unit;
+import com.totem_dasa.services.StockService;
 
 public class App {
   public static void main(String[] args) {

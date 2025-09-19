@@ -1,4 +1,4 @@
-package br.com.totem.models;
+package com.totem_dasa.models;
 
 public class SupplyMovement {
   private Supply supply;

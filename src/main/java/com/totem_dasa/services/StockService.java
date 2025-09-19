@@ -1,13 +1,13 @@
-package br.com.totem.services;
+package com.totem_dasa.services;
 
-import br.com.totem.infra.FakeDatabase;
-import br.com.totem.models.StockEntry;
-import br.com.totem.models.StockExit;
-import br.com.totem.models.Employee;
-import br.com.totem.models.SupplyMovement;
-import br.com.totem.models.Supply;
-import br.com.totem.models.Totem;
-import br.com.totem.models.Unit;
+import com.totem_dasa.infra.FakeDatabase;
+import com.totem_dasa.models.StockEntry;
+import com.totem_dasa.models.StockExit;
+import com.totem_dasa.models.Employee;
+import com.totem_dasa.models.SupplyMovement;
+import com.totem_dasa.models.Supply;
+import com.totem_dasa.models.Totem;
+import com.totem_dasa.models.Unit;
 
 public class StockService {
   private final Totem totem;
