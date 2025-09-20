@@ -2,21 +2,26 @@ package com.totem_dasa.models;
 
 import java.time.LocalDateTime;
 
-public abstract class StockMovement {
-  protected int id;
-  protected Employee employee;
-  protected Totem totem;
-  protected LocalDateTime date;
+public class StockMovement {
+  private int id;
+  private int employeeID;
+  private int totemID;
+  private LocalDateTime date;
 
-  public StockMovement(Employee employee, Totem totem) {
-    this.employee = employee;
-    this.totem = totem;
-    this.date = LocalDateTime.now();
+  public StockMovement(int id, int employeeID, int totemID, LocalDateTime date) {
+    this.id = id;
+    this.employeeID = employeeID;
+    this.totemID = totemID;
+    this.date = date;
   }
 
-  public abstract void register();
+  public int getId() { return id; }
+  public int getEmployeeID() { return employeeID; }
+  public int getTotemID() { return totemID; }
+  public LocalDateTime getDate() { return date; }
 
-  public abstract String getSummary();
-
-  public abstract void addMovement(SupplyMovement movement);
+  @Override
+  public String toString() {
+    return "Alteração | ID: " + id + ", ID do funcionário: " + employeeID + ", ID do totem: " + totemID + ", Data: " + date;
+  }
 }
