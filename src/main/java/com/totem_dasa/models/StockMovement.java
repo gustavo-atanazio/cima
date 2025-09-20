@@ -15,6 +15,12 @@ public class StockMovement {
     this.date = date;
   }
 
+  public StockMovement(int employeeID, int totemID, LocalDateTime date) {
+    this.employeeID = employeeID;
+    this.totemID = totemID;
+    this.date = date;
+  }
+
   public int getId() { return id; }
   public int getEmployeeID() { return employeeID; }
   public int getTotemID() { return totemID; }

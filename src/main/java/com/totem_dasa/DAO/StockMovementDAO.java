@@ -70,7 +70,7 @@ public class StockMovementDAO implements CRUD<StockMovement, Integer> {
       + DATE_COLUMN + ") VALUES (?, ?, ?)"
     ;
 
-    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+    try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
       stmt.setInt(1, entity.getEmployeeID());
       stmt.setInt(2, entity.getTotemID());
       stmt.setTimestamp(3, java.sql.Timestamp.valueOf(entity.getDate()));
@@ -78,8 +78,16 @@ public class StockMovementDAO implements CRUD<StockMovement, Integer> {
       stmt.executeUpdate();
 
       try (ResultSet rs = stmt.getGeneratedKeys()) {
-        int generatedId = rs.getInt(1);
-        return new StockMovement(generatedId, entity.getEmployeeID(), entity.getTotemID(), entity.getDate());
+        if (rs.next()) {
+          int generatedId = rs.getInt(1);
+
+          return new StockMovement(
+            generatedId,
+            entity.getEmployeeID(),
+            entity.getTotemID(),
+            entity.getDate()
+          );
+        } else { throw new SQLException("Falha ao obter ID gerado."); }
       }
     } catch (SQLException e) { throw new RuntimeException(e); }
   }
