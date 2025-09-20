@@ -45,7 +45,7 @@ public class TotemTest {
     System.out.println("--- Exclusão de totem: ---");
 
     controller.delete(createdTotem.getId());
-    System.out.println("Totem com ID 6 excluído:");
+    System.out.println("Movimentação com ID " + createdTotem.getId() + " excluída:");
     controller.getAll().forEach(totem -> System.out.println(totem.toString()));
 
     System.out.println("--- ---");

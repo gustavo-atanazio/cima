@@ -46,7 +46,7 @@ public class StockMovementTest {
     System.out.println("--- Exclusão de alteração: ---");
 
     controller.delete(createdMovement.getId());
-    System.out.println("Alteração com ID 8 excluída:");
+    System.out.println("Movimentação com ID " + createdMovement.getId() + " excluída:");
     controller.getAll().forEach(totem -> System.out.println(totem.toString()));
 
     System.out.println("--- ---");
