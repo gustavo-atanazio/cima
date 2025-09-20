@@ -63,7 +63,7 @@ public class StockMovementDAO implements CRUD<StockMovement, Integer> {
   }
 
   @Override
-  public void create(StockMovement entity) {
+  public StockMovement create(StockMovement entity) {
     final String sql = "INSERT INTO " + TABLE_NAME + " (" 
       + EMPLOYEE_ID_COLUMN + ", " 
       + TOTEM_ID_COLUMN + ", " 
@@ -76,6 +76,11 @@ public class StockMovementDAO implements CRUD<StockMovement, Integer> {
       stmt.setTimestamp(3, java.sql.Timestamp.valueOf(entity.getDate()));
 
       stmt.executeUpdate();
+
+      try (ResultSet rs = stmt.getGeneratedKeys()) {
+        int generatedId = rs.getInt(1);
+        return new StockMovement(generatedId, entity.getEmployeeID(), entity.getTotemID(), entity.getDate());
+      }
     } catch (SQLException e) { throw new RuntimeException(e); }
   }
 

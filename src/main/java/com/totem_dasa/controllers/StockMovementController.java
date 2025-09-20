@@ -17,8 +17,9 @@ public class StockMovementController {
     return StockMovementDAO.findById(id);
   }
 
-  public void post(StockMovement movement) {
-    StockMovementDAO.create(movement);
+  public StockMovement post(StockMovement movement) {
+    StockMovement createdStockMovement = StockMovementDAO.create(movement);
+    return createdStockMovement;
   }
 
   public void delete(int id) {

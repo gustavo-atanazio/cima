@@ -9,6 +9,8 @@ public class StockMovementTest {
   private static final StockMovementController controller = new StockMovementController();
 
   public static void testAll() {
+    System.out.println("----- INÍCIO DOS TESTES DE MOVIMENTAÇÃO DE ESTOQUE -----");
+
     controller.getAll().forEach(movement -> System.out.println(movement.toString()));
 
     Optional<StockMovement> movementOne = controller.getById(1);
@@ -20,5 +22,7 @@ public class StockMovementTest {
 
     if (movementTwo.isPresent()) System.out.println("Movimentação encontrada: " + movementTwo.get().toString());
     else System.out.println("Movimentação não encontrada.");
+
+    System.out.println("----- FIM DOS TESTES DE MOVIMENTAÇÃO DE ESTOQUE -----");  
   }
 }
