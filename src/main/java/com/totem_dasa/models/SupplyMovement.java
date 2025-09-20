@@ -1,17 +1,35 @@
 package com.totem_dasa.models;
 
 public class SupplyMovement {
-  private Supply supply;
+  private int id;
+  private int supplyID;
   private int quantity;
+  private char type;
+  private int stockMovementID;
 
-  public SupplyMovement(Supply supply, int quantity) {
-    this.supply = supply;
+  public SupplyMovement(int id, int supplyID, int quantity, char type, int stockMovementID) {
+    this.id = id;
+    this.supplyID = supplyID;
     this.quantity = quantity;
+    this.type = type;
+    this.stockMovementID = stockMovementID;
   }
 
-  public Supply getSupply() { return supply; }
+  public SupplyMovement(int supplyID, int quantity, char type, int stockMovementID) {
+    this.supplyID = supplyID;
+    this.quantity = quantity;
+    this.type = type;
+    this.stockMovementID = stockMovementID;
+  }
 
+  public int getId() { return id; }
+  public int getSupplyID() { return supplyID; }
   public int getQuantity() { return quantity; }
+  public char getType() { return type; }
+  public int getStockMovementID() { return stockMovementID; }
 
-  public String getSummary() { return supply.getName() + " - " + quantity + " unidade(s)"; }
+  @Override
+  public String toString() {
+    return "Movimentação de insumo | ID: " + id + ", ID do insumo: " + supplyID + ", Quantidade: " + quantity + ", Tipo: " + type + ", ID da alteração: " + stockMovementID;
+  }
 }
