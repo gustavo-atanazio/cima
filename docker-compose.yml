@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: totem-dasa-postgres
+
+    environment:
+      POSTGRES_DB: totem_dasa
+      POSTGRES_USER: totem_user
+      POSTGRES_PASSWORD: totem_password
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - totem-dasa-network
+
+  flyway:
+    image: flyway/flyway:10.15.0
+    container_name: totem-dasa-flyway
+    command: -url=jdbc:postgresql://postgres:5432/totem_dasa -user=totem_user -password=totem_password migrate
+    volumes:
+      - ./src/main/resources/db/migrations:/flyway/sql
+    depends_on:
+      - postgres
+    networks:
+      - totem-dasa-network
+
+volumes:
+  postgres_data:
+
+networks:
+  totem-dasa-network:
+    driver: bridge
