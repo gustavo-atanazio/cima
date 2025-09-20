@@ -8,7 +8,7 @@ public interface CRUD<E, I> {
 
   List<E> findAll(); // GET
   Optional<E> findById(I id); // GET by ID
-  void create(E entity); // POST
+  E create(E entity); // POST
   void update(E entity); // PUT
   void delete(I id); // DELETE
 }
