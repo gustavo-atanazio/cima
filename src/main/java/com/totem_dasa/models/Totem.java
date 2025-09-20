@@ -9,7 +9,16 @@ public class Totem {
     this.unitID = unitID;
   }
 
+  public Totem(int unitID) {
+    this.unitID = unitID;
+  }
+
   public int getId() { return id; }
 
   public int getUnitID() { return unitID; }
+
+  @Override
+  public String toString() {
+    return "Totem | ID: " + id + ", ID da unidade: " + unitID;
+  }
 }
