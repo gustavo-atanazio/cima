@@ -1,32 +1,16 @@
+## Pré-requisitos
+- Docker
+- Java 21
+
 ## Como Executar
-No package br.com.totem, execute a classe App
+Na raíz do projeto, execute o comando `docker compose up`. Em seguida, abra outro terminal e, no package `com.totem_dasa`, execute a classe `App`.
 
 ## Dados Fictícios
-O projeto utiliza dados fictícios para simular o funcionamento do sistema. Para visualizar a simulação, você pode acessar a classe `br.com.totem.infrastructure.FakeDatabase` que contém uma implementação simulada de um banco de dados.
+O projeto utiliza dados fictícios para simular o funcionamento do sistema. Para visualizar a simulação, você pode acessar o arquivo `V1__create_general_tables.sql` que contém uma implementação simulada de um banco de dados.
 
 Para essa fase inicial, você pode utilizar o token de acesso como `valid-token` para simular o funcionário do sistema.
 
-Os dados fictícios utilizados são:
-
-- Insumos:
-    - Seringa
-    - Gaze
-    - Luvas
-    - Álcool Gel
-- Funcionário:
-    - ID: 1,
-    Nome: Funcionário Teste,
-    Token: valid-token
-- Unidade:
-    - ID: 1,
-    Nome: Unidade Teste,
-    Endereço: Endereço Teste
-- Totem:
-    - ID: 1,
-    UnidadeId: 1
-
 ## Sobre o Projeto
-
 
 A proposta deste projeto parte da necessidade de tornar mais eficiente o processo de controle de entrada e saída de insumos nos almoxarifados das unidades da Dasa. Atualmente, esse processo é propenso a erros operacionais, atrasos e baixa rastreabilidade, especialmente quando realizado de forma manual ou descentralizada. A compreensão do desafio nos levou a buscar uma solução que permitisse registrar de forma prática, segura e auditável as movimentações de insumos realizadas por funcionários.
         
