@@ -1,4 +1,4 @@
-package com.totem_dasa.models;
+package com.cima.models;
 
 public class SupplyMovement {
   private int id;

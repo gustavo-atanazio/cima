@@ -1,12 +1,12 @@
 services:
   postgres:
     image: postgres:13
-    container_name: totem-dasa-postgres
+    container_name: cima-postgres
 
     environment:
-      POSTGRES_DB: totem_dasa
-      POSTGRES_USER: totem_user
-      POSTGRES_PASSWORD: totem_password
+      POSTGRES_DB: cima
+      POSTGRES_USER: cima_user
+      POSTGRES_PASSWORD: cima_password
 
     ports:
       - "5432:5432"
@@ -15,22 +15,22 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
     networks:
-      - totem-dasa-network
+      - cima-network
 
   flyway:
     image: flyway/flyway:10.15.0
-    container_name: totem-dasa-flyway
-    command: -url=jdbc:postgresql://postgres:5432/totem_dasa -user=totem_user -password=totem_password migrate
+    container_name: cima-flyway
+    command: -url=jdbc:postgresql://postgres:5432/cima -user=cima_user -password=cima_password migrate
     volumes:
       - ./src/main/resources/db/migrations:/flyway/sql
     depends_on:
       - postgres
     networks:
-      - totem-dasa-network
+      - cima-network
 
 volumes:
   postgres_data:
 
 networks:
-  totem-dasa-network:
+  cima-network:
     driver: bridge

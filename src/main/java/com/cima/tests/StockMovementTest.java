@@ -1,10 +1,10 @@
-package com.totem_dasa.tests;
+package com.cima.tests;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import com.totem_dasa.controllers.StockMovementController;
-import com.totem_dasa.models.StockMovement;
+import com.cima.controllers.StockMovementController;
+import com.cima.models.StockMovement;
 
 public class StockMovementTest {
   private static final StockMovementController controller = new StockMovementController();

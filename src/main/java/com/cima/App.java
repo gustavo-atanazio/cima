@@ -1,11 +1,11 @@
-package com.totem_dasa;
+package com.cima;
 
 import java.util.Scanner;
 
-import com.totem_dasa.services.AuthService;
-import com.totem_dasa.tests.StockMovementTest;
-import com.totem_dasa.tests.SupplyMovementTest;
-import com.totem_dasa.tests.TotemTest;
+import com.cima.services.AuthService;
+import com.cima.tests.StockMovementTest;
+import com.cima.tests.SupplyMovementTest;
+import com.cima.tests.TotemTest;
 
 public class App {
   public static void main(String[] args) {

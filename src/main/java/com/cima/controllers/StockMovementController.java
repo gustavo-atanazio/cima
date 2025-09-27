@@ -1,10 +1,10 @@
-package com.totem_dasa.controllers;
+package com.cima.controllers;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.totem_dasa.DAO.StockMovementDAO;
-import com.totem_dasa.models.StockMovement;
+import com.cima.DAO.StockMovementDAO;
+import com.cima.models.StockMovement;
 
 public class StockMovementController {
   private final StockMovementDAO StockMovementDAO = new StockMovementDAO();

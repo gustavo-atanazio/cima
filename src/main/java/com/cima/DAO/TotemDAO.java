@@ -1,4 +1,4 @@
-package com.totem_dasa.DAO;
+package com.cima.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.totem_dasa.infra.ConnectionFactory;
-import com.totem_dasa.models.Totem;
+import com.cima.infra.ConnectionFactory;
+import com.cima.models.Totem;
 
 public class TotemDAO implements CRUD<Totem, Integer> {
   private final String TABLE_NAME = "totem";

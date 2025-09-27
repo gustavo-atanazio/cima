@@ -1,13 +1,13 @@
-package com.totem_dasa.infra;
+package com.cima.infra;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-  private final String URL = "jdbc:postgresql://localhost:5432/totem_dasa";
-  private final String USER = "totem_user";
-  private final String PASSWORD = "totem_password";
+  private final String URL = "jdbc:postgresql://localhost:5432/cima";
+  private final String USER = "cima_user";
+  private final String PASSWORD = "cima_password";
 
   public Connection getConnection() {
     try {

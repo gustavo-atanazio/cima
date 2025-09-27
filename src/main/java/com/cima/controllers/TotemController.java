@@ -1,10 +1,10 @@
-package com.totem_dasa.controllers;
+package com.cima.controllers;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.totem_dasa.DAO.TotemDAO;
-import com.totem_dasa.models.Totem;
+import com.cima.DAO.TotemDAO;
+import com.cima.models.Totem;
 
 public class TotemController {
   private final TotemDAO totemDAO = new TotemDAO();

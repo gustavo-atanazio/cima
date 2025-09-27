@@ -1,4 +1,4 @@
-package com.totem_dasa.models;
+package com.cima.models;
 
 import java.time.LocalDateTime;
 

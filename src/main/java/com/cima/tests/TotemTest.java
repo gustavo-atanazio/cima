@@ -1,9 +1,9 @@
-package com.totem_dasa.tests;
+package com.cima.tests;
 
 import java.util.Optional;
 
-import com.totem_dasa.controllers.TotemController;
-import com.totem_dasa.models.Totem;
+import com.cima.controllers.TotemController;
+import com.cima.models.Totem;
 
 public class TotemTest {
   private static final TotemController controller = new TotemController();

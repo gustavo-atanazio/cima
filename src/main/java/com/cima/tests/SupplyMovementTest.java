@@ -1,9 +1,9 @@
-package com.totem_dasa.tests;
+package com.cima.tests;
 
 import java.util.Optional;
 
-import com.totem_dasa.controllers.SupplyMovementController;
-import com.totem_dasa.models.SupplyMovement;
+import com.cima.controllers.SupplyMovementController;
+import com.cima.models.SupplyMovement;
 
 public class SupplyMovementTest {
   private static final SupplyMovementController controller = new SupplyMovementController();

@@ -1,4 +1,4 @@
-package com.totem_dasa.services;
+package com.cima.services;
 
 public class AuthService {
   private final String TOKEN = "valid-token";
