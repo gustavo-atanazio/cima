@@ -1,27 +1,32 @@
 package com.cima.models;
 
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity @Table(name = "employee")
+@NoArgsConstructor @AllArgsConstructor @Getter
 public class Employee {
-  private int id;
-  private int unitID;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+
+  @Column(nullable = false) @Setter
   private String name;
-  private int accessLevel;
-  private String token;
 
-  public Employee(int id, int unitID, String name, int accessLevel, String token) {
-    this.id = id;
-    this.unitID = unitID;
-    this.name = name;
-    this.accessLevel = accessLevel;
-    this.token = token;
-  }
+  @Column(name = "access_level", nullable = false) @Setter
+  private Integer accessLevel;
 
-  public int getId() { return id; }
-
-  public int getUnitID() { return unitID; }
-
-  public String getName() { return name; }
-
-  public int getAccessLevel() { return accessLevel; }
-
-  public String getToken() { return token; }
+  @ManyToMany(mappedBy = "employees") @Setter
+  private List<Unit> units;
 }
