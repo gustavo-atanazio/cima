@@ -1,60 +1,40 @@
 package com.cima.models;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity @Table(name = "unit")
+@NoArgsConstructor @AllArgsConstructor @Getter
 public class Unit {
-  private int id;
-  private String name;
-  private String address;
-  private Map<Supply, Integer> stock = new HashMap<>();
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-  public Unit(int id, String name, String address) {
-    this.id = id;
-    this.name = name;
-    this.address = address;
-  }
+  @Column(nullable = false) @Setter
+  private String CEP;
 
-  public int getId() { return id; }
+  @Column(nullable = false) @Setter
+  private Integer number;
 
-  public String getName() { return name; }
-
-  public String getAddress() { return address; }
-
-  public Map<Supply, Integer> getStock() { return Collections.unmodifiableMap(stock); }
-
-  public void addSupply(Supply supply, int quantity) {
-    stock.put(supply, stock.getOrDefault(supply, 0) + quantity);
-  }
-
-  public void removeSupply(Supply supply, int quantity) {
-    int atual = stock.getOrDefault(supply, 0);
-    int newValue = atual - quantity;
-
-    if (quantity > atual) throw new IllegalArgumentException("Quantidade insuficiente no estoque para " + supply.getName());
-
-    if (newValue > 0) stock.put(supply, newValue);
-    else stock.remove(supply);
-  }
-
-  public int getQuantityOf(Supply supply) { return stock.getOrDefault(supply, 0); }
-
-  public void showSupplies() {
-    if (stock.isEmpty()) {
-      System.out.println("Nenhum insumo registrado.");
-      return;
-    }
-
-    System.out.println("\nEstoque atual da unidade:");
-
-    for (Map.Entry<Supply, Integer> entry : stock.entrySet()) {
-      System.out.printf(
-        "- %s (código %d): %d unidades\n",
-        entry.getKey().getName(),
-        entry.getKey().getId(),
-        entry.getValue()
-      );
-    }
-  }
+  @ManyToMany
+  @JoinTable(
+    name = "unit_employee",
+    joinColumns = @JoinColumn(name = "unit_id"),
+    inverseJoinColumns = @JoinColumn(name = "employee_id")
+  )
+  @Setter
+  private List<Employee> employees;
 }
