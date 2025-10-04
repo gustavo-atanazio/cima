@@ -14,12 +14,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cima_user -d cima"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   flyway:
     image: flyway/flyway:latest
     container_name: cima-flyway
@@ -29,8 +23,7 @@ services:
       - ./src/main/resources/db/migrations:/flyway/sql
 
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
 
 volumes:
   postgres_data:
