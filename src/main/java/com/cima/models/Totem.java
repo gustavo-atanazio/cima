@@ -13,14 +13,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Table(name = "totem") @AllArgsConstructor @NoArgsConstructor
+@Entity @Table(name = "totem")
+@NoArgsConstructor @AllArgsConstructor @Getter
 public class Totem {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Getter
   private Integer id;
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "supply_warehouse_id", foreignKey = @ForeignKey(name = "fk_totem_supply_warehouse"))
-  @Getter @Setter
+  @Setter
   private SupplyWarehouse supplyWarehouse;
 }
