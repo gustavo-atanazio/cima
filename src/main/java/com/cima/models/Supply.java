@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -31,7 +33,13 @@ public class Supply {
   @Column(nullable = false) @Setter
   private Integer quantity;
 
-  @ManyToMany(mappedBy = "supplies") @Setter
+  @ManyToMany
+  @JoinTable(
+    name = "supply_warehouse__supply",
+    joinColumns = @JoinColumn(name = "supply_id"),
+    inverseJoinColumns = @JoinColumn(name = "supply_warehouse_id")
+  )
+  @Setter
   private List<SupplyWarehouse> supplyWarehouses;
 
   @OneToMany(mappedBy = "supply") @Setter
