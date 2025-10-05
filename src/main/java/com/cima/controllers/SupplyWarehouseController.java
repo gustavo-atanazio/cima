@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.SupplyWarehouseDTO;
 import com.cima.models.SupplyWarehouse;
-import com.cima.repositories.SupplyWarehouseRepository;
+import com.cima.services.SupplyWarehouseService;
 
 @RestController @RequestMapping("/supply-warehouses")
 public class SupplyWarehouseController {
   @Autowired
-  private SupplyWarehouseRepository repository;
+  private SupplyWarehouseService service;
 
   @GetMapping
   public ResponseEntity<List<SupplyWarehouseDTO>> getAll() {
-    List<SupplyWarehouse> supplyWarehouses = repository.findAll();
+    List<SupplyWarehouse> supplyWarehouses = service.findAll();
 
     return ResponseEntity.ok()
       .body(supplyWarehouses.stream()
@@ -36,17 +36,15 @@ public class SupplyWarehouseController {
 
   @GetMapping("/{id}")
   public ResponseEntity<SupplyWarehouseDTO> getById(@PathVariable Integer id) {
-    SupplyWarehouse supplyWarehouse = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))
-    ;
+    SupplyWarehouse supplyWarehouse = service.findById(id);
 
     return ResponseEntity.ok(new SupplyWarehouseDTO(supplyWarehouse));
   }
 
   @PostMapping
   public ResponseEntity<SupplyWarehouseDTO> create(@RequestBody SupplyWarehouse supplyWarehouse) {
-    SupplyWarehouse savedSupplyWarehouse = repository.save(supplyWarehouse);
+    SupplyWarehouse savedSupplyWarehouse = service.create(supplyWarehouse);
+
     return ResponseEntity.ok(new SupplyWarehouseDTO(savedSupplyWarehouse));
   }
 
@@ -55,25 +53,15 @@ public class SupplyWarehouseController {
     @PathVariable Integer id,
     @RequestBody SupplyWarehouse supplyWarehouseDetails
   ) {
-    SupplyWarehouse supplyWarehouse = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))
-    ;
+    service.update(id, supplyWarehouseDetails);
 
-    supplyWarehouse.setUnit(supplyWarehouseDetails.getUnit());
-
-    repository.save(supplyWarehouse);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
-    SupplyWarehouse supplyWarehouse = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))
-    ;
+    service.delete(id);
 
-    repository.delete(supplyWarehouse);
     return ResponseEntity.noContent().build();
   }
 }
