@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.SupplyMovementDTO;
 import com.cima.models.SupplyMovement;
-import com.cima.repositories.SupplyMovementRepository;
+import com.cima.services.SupplyMovementService;
 
 @RestController @RequestMapping("/supply-movements")
 public class SupplyMovementController {
   @Autowired
-  private SupplyMovementRepository repository;
+  private SupplyMovementService service;
 
   @GetMapping
   public ResponseEntity<List<SupplyMovementDTO>> getAll() {
-    List<SupplyMovement> movements = repository.findAll();
+    List<SupplyMovement> movements = service.findAll();
 
     return ResponseEntity.ok()
       .body(movements.stream()
@@ -36,17 +36,15 @@ public class SupplyMovementController {
 
   @GetMapping("/{id}")
   public ResponseEntity<SupplyMovementDTO> getById(@PathVariable Integer id) {
-    SupplyMovement movement = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))
-    ;
+    SupplyMovement movement = service.findById(id);
 
     return ResponseEntity.ok(new SupplyMovementDTO(movement));
   }
 
   @PostMapping
   public ResponseEntity<SupplyMovementDTO> create(@RequestBody SupplyMovement movement) {
-    SupplyMovement savedMovement = repository.save(movement);
+    SupplyMovement savedMovement = service.create(movement);
+
     return ResponseEntity.ok(new SupplyMovementDTO(savedMovement));
   }
 
@@ -55,29 +53,15 @@ public class SupplyMovementController {
     @PathVariable Integer id,
     @RequestBody SupplyMovement movementDetails
   ) {
-    SupplyMovement movement = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))
-    ;
+    service.update(id, movementDetails);
 
-    movement.setDate(movementDetails.getDate());
-    movement.setTotem(movementDetails.getTotem());
-    movement.setEmployee(movementDetails.getEmployee());
-    movement.setSupply(movementDetails.getSupply());
-    movement.setQuantity(movementDetails.getQuantity());
-
-    repository.save(movement);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
-    SupplyMovement supply = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))
-    ;
+    service.delete(id);
 
-    repository.delete(supply);
     return ResponseEntity.noContent().build();
   }
 }
