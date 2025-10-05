@@ -21,7 +21,7 @@ public class SupplyMovementController {
   private SupplyMovementRepository repository;
 
   @GetMapping
-  public ResponseEntity<List<SupplyMovementDTO>> getAllMovements() {
+  public ResponseEntity<List<SupplyMovementDTO>> getAll() {
     List<SupplyMovement> movements = repository.findAll();
 
     return ResponseEntity.ok()
@@ -33,7 +33,7 @@ public class SupplyMovementController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<SupplyMovementDTO> getMovementById(Integer id) {
+  public ResponseEntity<SupplyMovementDTO> getById(Integer id) {
     SupplyMovement movement = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))
@@ -43,13 +43,13 @@ public class SupplyMovementController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyMovementDTO> createMovement(SupplyMovement movement) {
+  public ResponseEntity<SupplyMovementDTO> create(SupplyMovement movement) {
     SupplyMovement savedMovement = repository.save(movement);
     return ResponseEntity.ok(new SupplyMovementDTO(savedMovement));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<SupplyMovementDTO> updateMovement(Integer id, SupplyMovement movementDetails) {
+  public ResponseEntity<SupplyMovementDTO> update(Integer id, SupplyMovement movementDetails) {
     SupplyMovement movement = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))
@@ -66,7 +66,7 @@ public class SupplyMovementController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyMovementDTO> deleteMovement(Integer id) {
+  public ResponseEntity<SupplyMovementDTO> delete(Integer id) {
     SupplyMovement supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))

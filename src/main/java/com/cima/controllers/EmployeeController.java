@@ -21,7 +21,7 @@ public class EmployeeController {
   private EmployeeRepository repository;
 
   @GetMapping
-  public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
+  public ResponseEntity<List<EmployeeDTO>> getAll() {
     List<Employee> employees = repository.findAll();
 
     return ResponseEntity.ok()
@@ -33,7 +33,7 @@ public class EmployeeController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<EmployeeDTO> getEmployeeById(Integer id) {
+  public ResponseEntity<EmployeeDTO> getById(Integer id) {
     Employee employee = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))
@@ -43,13 +43,13 @@ public class EmployeeController {
   }
 
   @PostMapping
-  public ResponseEntity<EmployeeDTO> createEmployee(Employee employee) {
+  public ResponseEntity<EmployeeDTO> create(Employee employee) {
     Employee savedEmployee = repository.save(employee);
     return ResponseEntity.ok(new EmployeeDTO(savedEmployee));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<EmployeeDTO> updateEmployee(Integer id, Employee employeeDetails) {
+  public ResponseEntity<EmployeeDTO> update(Integer id, Employee employeeDetails) {
     Employee employee = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))
@@ -64,7 +64,7 @@ public class EmployeeController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<EmployeeDTO> deleteEmployee(Integer id) {
+  public ResponseEntity<EmployeeDTO> delete(Integer id) {
     Employee employee = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))

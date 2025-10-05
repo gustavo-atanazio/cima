@@ -21,7 +21,7 @@ public class TotemController {
   private TotemRepository repository;
 
   @GetMapping
-  public ResponseEntity<List<TotemDTO>> getAllTotems() {
+  public ResponseEntity<List<TotemDTO>> getAll() {
     List<Totem> totems = repository.findAll();
 
     return ResponseEntity.ok()
@@ -33,7 +33,7 @@ public class TotemController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<TotemDTO> getTotemById(Integer id) {
+  public ResponseEntity<TotemDTO> getById(Integer id) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
@@ -43,13 +43,13 @@ public class TotemController {
   }
 
   @PostMapping
-  public ResponseEntity<TotemDTO> createTotem(Totem totem) {
+  public ResponseEntity<TotemDTO> create(Totem totem) {
     Totem savedTotem = repository.save(totem);
     return ResponseEntity.ok(new TotemDTO(savedTotem));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<TotemDTO> updateTotem(Integer id, Totem totemDetails) {
+  public ResponseEntity<TotemDTO> update(Integer id, Totem totemDetails) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
@@ -62,7 +62,7 @@ public class TotemController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<TotemDTO> deleteTotem(Integer id) {
+  public ResponseEntity<TotemDTO> delete(Integer id) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))

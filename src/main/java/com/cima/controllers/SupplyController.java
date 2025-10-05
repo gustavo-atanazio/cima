@@ -21,7 +21,7 @@ public class SupplyController {
   private SupplyRepository repository;
 
   @GetMapping
-  public ResponseEntity<List<SupplyDTO>> getAllSupplies() {
+  public ResponseEntity<List<SupplyDTO>> getAll() {
     List<Supply> supplies = repository.findAll();
 
     return ResponseEntity.ok()
@@ -33,7 +33,7 @@ public class SupplyController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<SupplyDTO> getSupplyById(Integer id) {
+  public ResponseEntity<SupplyDTO> getById(Integer id) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
@@ -43,13 +43,13 @@ public class SupplyController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyDTO> createSupply(Supply supply) {
+  public ResponseEntity<SupplyDTO> create(Supply supply) {
     Supply savedSupply = repository.save(supply);
     return ResponseEntity.ok(new SupplyDTO(savedSupply));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<SupplyDTO> updateSupply(Integer id, Supply supplyDetails) {
+  public ResponseEntity<SupplyDTO> update(Integer id, Supply supplyDetails) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
@@ -66,7 +66,7 @@ public class SupplyController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyDTO> deleteSupply(Integer id) {
+  public ResponseEntity<SupplyDTO> delete(Integer id) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))

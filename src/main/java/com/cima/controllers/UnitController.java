@@ -21,7 +21,7 @@ public class UnitController {
   private UnitRepository repository;
 
   @GetMapping
-  public ResponseEntity<List<UnitDTO>> getAllUnits() {
+  public ResponseEntity<List<UnitDTO>> getAll() {
     List<Unit> units = repository.findAll();
 
     return ResponseEntity.ok()
@@ -33,7 +33,7 @@ public class UnitController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<UnitDTO> getUnitById(Integer id) {
+  public ResponseEntity<UnitDTO> getById(Integer id) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
@@ -43,13 +43,13 @@ public class UnitController {
   }
 
   @PostMapping
-  public ResponseEntity<UnitDTO> createUnit(Unit unit) {
+  public ResponseEntity<UnitDTO> create(Unit unit) {
     Unit savedUnit = repository.save(unit);
     return ResponseEntity.ok(new UnitDTO(savedUnit));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<UnitDTO> updateUnit(Integer id, Unit unitDetails) {
+  public ResponseEntity<UnitDTO> update(Integer id, Unit unitDetails) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
@@ -64,7 +64,7 @@ public class UnitController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<UnitDTO> deleteUnit(Integer id) {
+  public ResponseEntity<UnitDTO> delete(Integer id) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
