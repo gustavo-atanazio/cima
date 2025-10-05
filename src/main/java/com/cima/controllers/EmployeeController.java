@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.EmployeeDTO;
 import com.cima.models.Employee;
-import com.cima.repositories.EmployeeRepository;
+import com.cima.services.EmployeeService;
 
 @RestController @RequestMapping("/employees")
 public class EmployeeController {
   @Autowired
-  private EmployeeRepository repository;
+  private EmployeeService service;
 
   @GetMapping
   public ResponseEntity<List<EmployeeDTO>> getAll() {
-    List<Employee> employees = repository.findAll();
+    List<Employee> employees = service.findAll();
 
     return ResponseEntity.ok()
       .body(employees.stream()
@@ -36,17 +36,15 @@ public class EmployeeController {
 
   @GetMapping("/{id}")
   public ResponseEntity<EmployeeDTO> getById(@PathVariable Integer id) {
-    Employee employee = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))
-    ;
+    Employee employee = service.findById(id);
 
     return ResponseEntity.ok(new EmployeeDTO(employee));
   }
 
   @PostMapping
   public ResponseEntity<EmployeeDTO> create(@RequestBody Employee employee) {
-    Employee savedEmployee = repository.save(employee);
+    Employee savedEmployee = service.create(employee);
+
     return ResponseEntity.ok(new EmployeeDTO(savedEmployee));
   }
 
@@ -55,27 +53,15 @@ public class EmployeeController {
     @PathVariable Integer id,
     @RequestBody Employee employeeDetails
   ) {
-    Employee employee = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))
-    ;
+    service.update(id, employeeDetails);
 
-    employee.setName(employeeDetails.getName());
-    employee.setAccessLevel(employeeDetails.getAccessLevel());
-    employee.setUnits(employeeDetails.getUnits());
-
-    repository.save(employee);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
-    Employee employee = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))
-    ;
+    service.delete(id);
 
-    repository.delete(employee);
     return ResponseEntity.noContent().build();
   }
 }
