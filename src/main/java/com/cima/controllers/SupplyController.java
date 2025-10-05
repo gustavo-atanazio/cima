@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.SupplyDTO;
 import com.cima.models.Supply;
-import com.cima.repositories.SupplyRepository;
+import com.cima.services.SupplyService;
 
 @RestController @RequestMapping("/supplies")
 public class SupplyController {
   @Autowired
-  private SupplyRepository repository;
+  private SupplyService service;
 
   @GetMapping
   public ResponseEntity<List<SupplyDTO>> getAll() {
-    List<Supply> supplies = repository.findAll();
+    List<Supply> supplies = service.findAll();
 
     return ResponseEntity.ok()
       .body(supplies.stream()
@@ -36,17 +36,15 @@ public class SupplyController {
 
   @GetMapping("/{id}")
   public ResponseEntity<SupplyDTO> getById(@PathVariable Integer id) {
-    Supply supply = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
-    ;
+    Supply supply = service.findById(id);
 
     return ResponseEntity.ok(new SupplyDTO(supply));
   }
 
   @PostMapping
   public ResponseEntity<SupplyDTO> create(@RequestBody Supply supply) {
-    Supply savedSupply = repository.save(supply);
+    Supply savedSupply = service.create(supply);
+
     return ResponseEntity.ok(new SupplyDTO(savedSupply));
   }
 
@@ -55,29 +53,15 @@ public class SupplyController {
     @PathVariable Integer id,
     @RequestBody Supply supplyDetails
   ) {
-    Supply supply = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
-    ;
+    service.update(id, supplyDetails);
 
-    supply.setName(supplyDetails.getName());
-    supply.setLotNumber(supplyDetails.getLotNumber());
-    supply.setQuantity(supplyDetails.getQuantity());
-    supply.setSupplyWarehouses(supplyDetails.getSupplyWarehouses());
-    supply.setSupplyMovements(supplyDetails.getSupplyMovements());
-
-    repository.save(supply);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
-    Supply supply = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
-    ;
+    service.delete(id);
 
-    repository.delete(supply);
     return ResponseEntity.noContent().build();
   }
 }
