@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cima.DTO.SupplyWarehouse.CreateSupplyWarehouseDTO;
 import com.cima.DTO.SupplyWarehouse.SupplyWarehouseDTO;
 import com.cima.models.SupplyWarehouse;
 import com.cima.services.SupplyWarehouseService;
@@ -42,7 +43,7 @@ public class SupplyWarehouseController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyWarehouseDTO> create(@RequestBody SupplyWarehouse supplyWarehouse) {
+  public ResponseEntity<SupplyWarehouseDTO> create(@RequestBody CreateSupplyWarehouseDTO supplyWarehouse) {
     SupplyWarehouse savedSupplyWarehouse = service.create(supplyWarehouse);
 
     return ResponseEntity.ok(new SupplyWarehouseDTO(savedSupplyWarehouse));

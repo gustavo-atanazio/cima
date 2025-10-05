@@ -5,13 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cima.DTO.SupplyWarehouse.CreateSupplyWarehouseDTO;
 import com.cima.models.SupplyWarehouse;
+import com.cima.models.Unit;
 import com.cima.repositories.SupplyWarehouseRepository;
 
 @Service
 public class SupplyWarehouseService {
   @Autowired
   private SupplyWarehouseRepository repository;
+
+  @Autowired
+  private UnitService unitService;
 
   public List<SupplyWarehouse> findAll() { return repository.findAll(); }
 
@@ -22,7 +27,14 @@ public class SupplyWarehouseService {
     ;
   }
 
-  public SupplyWarehouse create(SupplyWarehouse supplyWarehouse) { return repository.save(supplyWarehouse); }
+  public SupplyWarehouse create(CreateSupplyWarehouseDTO supplyWarehouse) {
+    Unit unit = unitService.findById(supplyWarehouse.unitID());
+    SupplyWarehouse newSupplyWarehouse = new SupplyWarehouse();
+
+    newSupplyWarehouse.setUnit(unit);
+
+    return repository.save(newSupplyWarehouse);
+  }
 
   public SupplyWarehouse update(Integer id, SupplyWarehouse supplyWarehouseDetails) {
     SupplyWarehouse supplyWarehouse = findById(id);
