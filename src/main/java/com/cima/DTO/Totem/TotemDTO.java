@@ -1,4 +1,4 @@
-package com.cima.DTO;
+package com.cima.DTO.Totem;
 
 import com.cima.DTO.SupplyWarehouse.SimpleSupplyWarehouseDTO;
 import com.cima.models.Totem;

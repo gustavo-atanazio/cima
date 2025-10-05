@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cima.DTO.Totem.CreateTotemDTO;
+import com.cima.models.SupplyWarehouse;
 import com.cima.models.Totem;
 import com.cima.repositories.TotemRepository;
 
@@ -12,6 +14,9 @@ import com.cima.repositories.TotemRepository;
 public class TotemService {
   @Autowired
   private TotemRepository repository;
+
+  @Autowired
+  private SupplyWarehouseService supplyWarehouseService;
 
   public List<Totem> findAll() { return repository.findAll(); }
 
@@ -22,7 +27,14 @@ public class TotemService {
     ;
   }
 
-  public Totem create(Totem totem) { return repository.save(totem); }
+  public Totem create(CreateTotemDTO totem) {
+    SupplyWarehouse supplyWarehouse = supplyWarehouseService.findById(totem.supplyWarehouseID());
+    Totem newTotem = new Totem();
+
+    newTotem.setSupplyWarehouse(supplyWarehouse);
+
+    return repository.save(newTotem);
+  }
 
   public Totem update(Integer id, Totem totemDetails) {
     Totem totem = findById(id);

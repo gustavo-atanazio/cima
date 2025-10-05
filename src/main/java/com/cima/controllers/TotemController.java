@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cima.DTO.TotemDTO;
+import com.cima.DTO.Totem.CreateTotemDTO;
+import com.cima.DTO.Totem.TotemDTO;
 import com.cima.models.Totem;
 import com.cima.services.TotemService;
 
@@ -42,7 +43,7 @@ public class TotemController {
   }
 
   @PostMapping
-  public ResponseEntity<TotemDTO> create(@RequestBody Totem totem) {
+  public ResponseEntity<TotemDTO> create(@RequestBody CreateTotemDTO totem) {
     Totem savedTotem = service.create(totem);
 
     return ResponseEntity.ok(new TotemDTO(savedTotem));
