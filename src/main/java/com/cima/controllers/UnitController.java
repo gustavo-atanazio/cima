@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,7 @@ public class UnitController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<UnitDTO> getById(Integer id) {
+  public ResponseEntity<UnitDTO> getById(@PathVariable Integer id) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
@@ -43,13 +45,16 @@ public class UnitController {
   }
 
   @PostMapping
-  public ResponseEntity<UnitDTO> create(Unit unit) {
+  public ResponseEntity<UnitDTO> create(@RequestBody Unit unit) {
     Unit savedUnit = repository.save(unit);
     return ResponseEntity.ok(new UnitDTO(savedUnit));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<UnitDTO> update(Integer id, Unit unitDetails) {
+  public ResponseEntity<Void> update(
+    @PathVariable Integer id,
+    @RequestBody Unit unitDetails
+  ) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
@@ -64,7 +69,7 @@ public class UnitController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<UnitDTO> delete(Integer id) {
+  public ResponseEntity<UnitDTO> delete(@PathVariable Integer id) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))

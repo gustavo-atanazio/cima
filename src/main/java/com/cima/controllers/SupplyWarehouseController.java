@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,7 @@ public class SupplyWarehouseController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<SupplyWarehouseDTO> getById(Integer id) {
+  public ResponseEntity<SupplyWarehouseDTO> getById(@PathVariable Integer id) {
     SupplyWarehouse supplyWarehouse = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))
@@ -43,13 +45,16 @@ public class SupplyWarehouseController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyWarehouseDTO> create(SupplyWarehouse supplyWarehouse) {
+  public ResponseEntity<SupplyWarehouseDTO> create(@RequestBody SupplyWarehouse supplyWarehouse) {
     SupplyWarehouse savedSupplyWarehouse = repository.save(supplyWarehouse);
     return ResponseEntity.ok(new SupplyWarehouseDTO(savedSupplyWarehouse));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<SupplyWarehouseDTO> update(Integer id, SupplyWarehouse supplyWarehouseDetails) {
+  public ResponseEntity<Void> update(
+    @PathVariable Integer id,
+    @RequestBody SupplyWarehouse supplyWarehouseDetails
+  ) {
     SupplyWarehouse supplyWarehouse = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))
@@ -62,7 +67,7 @@ public class SupplyWarehouseController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyWarehouseDTO> delete(Integer id) {
+  public ResponseEntity<SupplyWarehouseDTO> delete(@PathVariable Integer id) {
     SupplyWarehouse supplyWarehouse = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,7 @@ public class SupplyController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<SupplyDTO> getById(Integer id) {
+  public ResponseEntity<SupplyDTO> getById(@PathVariable Integer id) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
@@ -43,13 +45,16 @@ public class SupplyController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyDTO> create(Supply supply) {
+  public ResponseEntity<SupplyDTO> create(@RequestBody Supply supply) {
     Supply savedSupply = repository.save(supply);
     return ResponseEntity.ok(new SupplyDTO(savedSupply));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<SupplyDTO> update(Integer id, Supply supplyDetails) {
+  public ResponseEntity<SupplyDTO> update(
+    @PathVariable Integer id,
+    @RequestBody Supply supplyDetails
+  ) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
@@ -66,7 +71,7 @@ public class SupplyController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyDTO> delete(Integer id) {
+  public ResponseEntity<SupplyDTO> delete(@PathVariable Integer id) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))

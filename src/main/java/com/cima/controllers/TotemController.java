@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +35,7 @@ public class TotemController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<TotemDTO> getById(Integer id) {
+  public ResponseEntity<TotemDTO> getById(@PathVariable Integer id) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
@@ -43,13 +45,16 @@ public class TotemController {
   }
 
   @PostMapping
-  public ResponseEntity<TotemDTO> create(Totem totem) {
+  public ResponseEntity<TotemDTO> create(@RequestBody Totem totem) {
     Totem savedTotem = repository.save(totem);
     return ResponseEntity.ok(new TotemDTO(savedTotem));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<TotemDTO> update(Integer id, Totem totemDetails) {
+  public ResponseEntity<Void> update(
+    @PathVariable Integer id,
+    @RequestBody Totem totemDetails
+  ) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
@@ -62,7 +67,7 @@ public class TotemController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<TotemDTO> delete(Integer id) {
+  public ResponseEntity<TotemDTO> delete(@PathVariable Integer id) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
