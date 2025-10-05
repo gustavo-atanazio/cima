@@ -3,10 +3,12 @@ package com.cima.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cima.models.Employee;
 import com.cima.repositories.EmployeeRepository;
 
+@Service
 public class EmployeeService {
   @Autowired
   private EmployeeRepository repository;
