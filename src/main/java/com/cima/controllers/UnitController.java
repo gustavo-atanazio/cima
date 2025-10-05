@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cima.DTO.UnitDTO;
+import com.cima.DTO.Unit.CreateUnitDTO;
+import com.cima.DTO.Unit.UnitDTO;
 import com.cima.models.Unit;
 import com.cima.services.UnitService;
 
@@ -42,7 +43,7 @@ public class UnitController {
   }
 
   @PostMapping
-  public ResponseEntity<UnitDTO> create(@RequestBody Unit unit) {
+  public ResponseEntity<UnitDTO> create(@RequestBody CreateUnitDTO unit) {
     Unit savedUnit = service.create(unit);
 
     return ResponseEntity.ok(new UnitDTO(savedUnit));
@@ -53,7 +54,7 @@ public class UnitController {
     @PathVariable Integer id,
     @RequestBody Unit unitDetails
   ) {
-    service.create(unitDetails);
+    service.update(id, unitDetails);
 
     return ResponseEntity.noContent().build();
   }

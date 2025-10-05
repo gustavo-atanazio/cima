@@ -1,10 +1,12 @@
 package com.cima.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cima.DTO.Unit.CreateUnitDTO;
 import com.cima.models.Unit;
 import com.cima.repositories.UnitRepository;
 
@@ -22,7 +24,15 @@ public class UnitService {
     ;
   }
 
-  public Unit create(Unit unit) { return repository.save(unit); }
+  public Unit create(CreateUnitDTO unit) {
+    Unit newUnit = new Unit();
+
+    newUnit.setCEP(unit.CEP());
+    newUnit.setNumber(unit.number());
+    newUnit.setEmployees(new ArrayList<>());
+
+    return repository.save(newUnit);
+  }
 
   public Unit update(Integer id, Unit unitDetails) {
     Unit unit = findById(id);
