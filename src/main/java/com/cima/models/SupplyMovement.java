@@ -1,35 +1,39 @@
 package com.cima.models;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity @Table(name = "supply_movement")
+@NoArgsConstructor @AllArgsConstructor @Getter
 public class SupplyMovement {
-  private int id;
-  private int supplyID;
-  private int quantity;
-  private char type;
-  private int stockMovementID;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-  public SupplyMovement(int id, int supplyID, int quantity, char type, int stockMovementID) {
-    this.id = id;
-    this.supplyID = supplyID;
-    this.quantity = quantity;
-    this.type = type;
-    this.stockMovementID = stockMovementID;
-  }
+  @Column(name = "date", nullable = false) @Setter
+  private LocalDateTime date;
 
-  public SupplyMovement(int supplyID, int quantity, char type, int stockMovementID) {
-    this.supplyID = supplyID;
-    this.quantity = quantity;
-    this.type = type;
-    this.stockMovementID = stockMovementID;
-  }
+  @ManyToOne @JoinColumn(name = "totem_id", nullable = false) @Setter
+  private Totem totem;
 
-  public int getId() { return id; }
-  public int getSupplyID() { return supplyID; }
-  public int getQuantity() { return quantity; }
-  public char getType() { return type; }
-  public int getStockMovementID() { return stockMovementID; }
+  @ManyToOne @JoinColumn(name = "employee_id", nullable = false) @Setter
+  private Employee employee;
 
-  @Override
-  public String toString() {
-    return "Movimentação de insumo | ID: " + id + ", ID do insumo: " + supplyID + ", Quantidade: " + quantity + ", Tipo: " + type + ", ID da alteração: " + stockMovementID;
-  }
+  @ManyToOne @JoinColumn(name = "supply_id", nullable = false) @Setter
+  private Supply supply;
+
+  @Column(nullable = false) @Setter
+  private Integer quantity;
 }
