@@ -51,7 +51,7 @@ public class SupplyController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<SupplyDTO> update(
+  public ResponseEntity<Void> update(
     @PathVariable Integer id,
     @RequestBody Supply supplyDetails
   ) {
@@ -71,7 +71,7 @@ public class SupplyController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyDTO> delete(@PathVariable Integer id) {
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
     Supply supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))

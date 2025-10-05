@@ -67,7 +67,7 @@ public class SupplyWarehouseController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyWarehouseDTO> delete(@PathVariable Integer id) {
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
     SupplyWarehouse supplyWarehouse = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))

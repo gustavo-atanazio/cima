@@ -69,7 +69,7 @@ public class UnitController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<UnitDTO> delete(@PathVariable Integer id) {
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
     Unit unit = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))

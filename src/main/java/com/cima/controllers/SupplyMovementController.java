@@ -71,7 +71,7 @@ public class SupplyMovementController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<SupplyMovementDTO> delete(@PathVariable Integer id) {
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
     SupplyMovement supply = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Movimentação de insumo não encontrada para o ID: " + id))

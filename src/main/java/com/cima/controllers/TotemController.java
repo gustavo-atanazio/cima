@@ -67,7 +67,7 @@ public class TotemController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<TotemDTO> delete(@PathVariable Integer id) {
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
     Totem totem = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))

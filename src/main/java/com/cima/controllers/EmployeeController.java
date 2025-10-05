@@ -51,7 +51,7 @@ public class EmployeeController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<EmployeeDTO> update(
+  public ResponseEntity<Void> update(
     @PathVariable Integer id,
     @RequestBody Employee employeeDetails
   ) {
@@ -69,7 +69,7 @@ public class EmployeeController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<EmployeeDTO> delete(@PathVariable Integer id) {
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
     Employee employee = repository
       .findById(id)
       .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o ID: " + id))
