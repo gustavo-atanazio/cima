@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.TotemDTO;
 import com.cima.models.Totem;
-import com.cima.repositories.TotemRepository;
+import com.cima.services.TotemService;
 
 @RestController @RequestMapping("/totems")
 public class TotemController {
   @Autowired
-  private TotemRepository repository;
+  private TotemService service;
 
   @GetMapping
   public ResponseEntity<List<TotemDTO>> getAll() {
-    List<Totem> totems = repository.findAll();
+    List<Totem> totems = service.findAll();
 
     return ResponseEntity.ok()
       .body(totems.stream()
@@ -36,17 +36,15 @@ public class TotemController {
 
   @GetMapping("/{id}")
   public ResponseEntity<TotemDTO> getById(@PathVariable Integer id) {
-    Totem totem = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
-    ;
+    Totem totem = service.findById(id);
 
     return ResponseEntity.ok(new TotemDTO(totem));
   }
 
   @PostMapping
   public ResponseEntity<TotemDTO> create(@RequestBody Totem totem) {
-    Totem savedTotem = repository.save(totem);
+    Totem savedTotem = service.create(totem);
+
     return ResponseEntity.ok(new TotemDTO(savedTotem));
   }
 
@@ -55,25 +53,17 @@ public class TotemController {
     @PathVariable Integer id,
     @RequestBody Totem totemDetails
   ) {
-    Totem totem = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
-    ;
+    Totem totem = service.findById(id);
 
     totem.setSupplyWarehouse(totemDetails.getSupplyWarehouse());
 
-    repository.save(totem);
+    service.update(id, totemDetails);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
-    Totem totem = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
-    ;
-
-    repository.delete(totem);
+    service.delete(id);
     return ResponseEntity.noContent().build();
   }
 }
