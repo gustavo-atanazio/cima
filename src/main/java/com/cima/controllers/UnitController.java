@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.UnitDTO;
 import com.cima.models.Unit;
-import com.cima.repositories.UnitRepository;
+import com.cima.services.UnitService;
 
 @RestController @RequestMapping("/units")
 public class UnitController {
   @Autowired
-  private UnitRepository repository;
+  private UnitService service;
 
   @GetMapping
   public ResponseEntity<List<UnitDTO>> getAll() {
-    List<Unit> units = repository.findAll();
+    List<Unit> units = service.findAll();
 
     return ResponseEntity.ok()
       .body(units.stream()
@@ -36,17 +36,15 @@ public class UnitController {
 
   @GetMapping("/{id}")
   public ResponseEntity<UnitDTO> getById(@PathVariable Integer id) {
-    Unit unit = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
-    ;
+    Unit unit = service.findById(id);
 
     return ResponseEntity.ok(new UnitDTO(unit));
   }
 
   @PostMapping
   public ResponseEntity<UnitDTO> create(@RequestBody Unit unit) {
-    Unit savedUnit = repository.save(unit);
+    Unit savedUnit = service.create(unit);
+
     return ResponseEntity.ok(new UnitDTO(savedUnit));
   }
 
@@ -55,27 +53,15 @@ public class UnitController {
     @PathVariable Integer id,
     @RequestBody Unit unitDetails
   ) {
-    Unit unit = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
-    ;
+    service.create(unitDetails);
 
-    unit.setCEP(unitDetails.getCEP());
-    unit.setNumber(unitDetails.getNumber());
-    unit.setEmployees(unitDetails.getEmployees());
-
-    repository.save(unit);
     return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
-    Unit unit = repository
-      .findById(id)
-      .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
-    ;
+    service.delete(id);
 
-    repository.delete(unit);
     return ResponseEntity.noContent().build();
   }
 }
