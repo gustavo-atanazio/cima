@@ -53,10 +53,6 @@ public class TotemController {
     @PathVariable Integer id,
     @RequestBody Totem totemDetails
   ) {
-    Totem totem = service.findById(id);
-
-    totem.setSupplyWarehouse(totemDetails.getSupplyWarehouse());
-
     service.update(id, totemDetails);
     return ResponseEntity.noContent().build();
   }
