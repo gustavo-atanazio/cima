@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import com.cima.DTO.Unit.CreateUnitDTO;
 import com.cima.models.Unit;
 import com.cima.repositories.UnitRepository;
@@ -20,7 +22,7 @@ public class UnitService {
   public Unit findById(Integer id) {
     return repository
       .findById(id)
-      .orElseThrow(() -> new RuntimeException("Unidade não encontrada para o ID: " + id))
+      .orElseThrow(() -> new EntityNotFoundException("Unidade não encontrada para o ID: " + id))
     ;
   }
 

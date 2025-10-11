@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import com.cima.models.SupplyMovement;
 import com.cima.repositories.SupplyMovementRepository;
 
@@ -18,7 +20,7 @@ public class SupplyMovementService {
   public SupplyMovement findById(Integer id) {
     return repository
       .findById(id)
-      .orElseThrow(() -> new RuntimeException("Alteração não encontrada para o ID: " + id))
+      .orElseThrow(() -> new EntityNotFoundException("Alteração não encontrada para o ID: " + id))
     ;
   }
 

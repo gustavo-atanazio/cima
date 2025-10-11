@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import com.cima.DTO.SupplyWarehouse.CreateSupplyWarehouseDTO;
 import com.cima.models.SupplyWarehouse;
 import com.cima.models.Unit;
@@ -23,7 +25,7 @@ public class SupplyWarehouseService {
   public SupplyWarehouse findById(Integer id) {
     return repository
       .findById(id)
-      .orElseThrow(() -> new RuntimeException("Almoxarifado não encontrado para o ID: " + id))
+      .orElseThrow(() -> new EntityNotFoundException("Almoxarifado não encontrado para o ID: " + id))
     ;
   }
 

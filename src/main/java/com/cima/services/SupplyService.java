@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import com.cima.models.Supply;
 import com.cima.repositories.SupplyRepository;
 
@@ -18,7 +20,7 @@ public class SupplyService {
   public Supply findById(Integer id) {
     return repository
       .findById(id)
-      .orElseThrow(() -> new RuntimeException("Insumo não encontrado para o ID: " + id))
+      .orElseThrow(() -> new EntityNotFoundException("Insumo não encontrado para o ID: " + id))
     ;
   }
 

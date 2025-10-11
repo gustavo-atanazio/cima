@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import com.cima.DTO.Totem.CreateTotemDTO;
 import com.cima.models.SupplyWarehouse;
 import com.cima.models.Totem;
@@ -23,7 +25,7 @@ public class TotemService {
   public Totem findById(Integer id) {
     return repository
       .findById(id)
-      .orElseThrow(() -> new RuntimeException("Totem não encontrado para o ID: " + id))
+      .orElseThrow(() -> new EntityNotFoundException("Totem não encontrado para o ID: " + id))
     ;
   }
 
