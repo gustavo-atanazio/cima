@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.Totem.CreateTotemDTO;
 import com.cima.DTO.Totem.TotemDTO;
+import com.cima.DTO.Totem.UpdateTotemDTO;
 import com.cima.models.Totem;
 import com.cima.services.TotemService;
 
@@ -52,7 +53,7 @@ public class TotemController {
   @PutMapping("/{id}")
   public ResponseEntity<Void> update(
     @PathVariable Integer id,
-    @RequestBody Totem totemDetails
+    @RequestBody UpdateTotemDTO totemDetails
   ) {
     service.update(id, totemDetails);
     return ResponseEntity.noContent().build();

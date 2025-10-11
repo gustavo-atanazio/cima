@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.Totem.CreateTotemDTO;
+import com.cima.DTO.Totem.UpdateTotemDTO;
 import com.cima.models.SupplyWarehouse;
 import com.cima.models.Totem;
 import com.cima.repositories.TotemRepository;
@@ -38,10 +39,11 @@ public class TotemService {
     return repository.save(newTotem);
   }
 
-  public Totem update(Integer id, Totem totemDetails) {
+  public Totem update(Integer id, UpdateTotemDTO totemDetails) {
     Totem totem = findById(id);
+    SupplyWarehouse supplyWarehouse = supplyWarehouseService.findById(totemDetails.supplyWarehouseID());
 
-    totem.setSupplyWarehouse(totemDetails.getSupplyWarehouse());
+    totem.setSupplyWarehouse(supplyWarehouse);
 
     return repository.save(totem);
   }
