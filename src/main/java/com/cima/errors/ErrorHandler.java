@@ -53,6 +53,15 @@ public class ErrorHandler {
     );
   }
 
+  @ExceptionHandler(InvalidReferenceException.class)
+  public ResponseEntity<ErrorResponse> handleInvalidReference(InvalidReferenceException exception) {
+    return buildResponse(
+      HttpStatus.BAD_REQUEST,
+      "Referência inválida",
+      exception.getMessage()
+    );
+  }
+
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException exception) {
     return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno", exception.getMessage());

@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import com.cima.DTO.Totem.CreateTotemDTO;
 import com.cima.DTO.Totem.UpdateTotemDTO;
 import com.cima.errors.BusinessRuleException;
+import com.cima.errors.InvalidReferenceException;
 import com.cima.models.SupplyWarehouse;
 import com.cima.models.Totem;
 import com.cima.repositories.TotemRepository;
@@ -40,9 +41,15 @@ public class TotemService {
     return repository.save(newTotem);
   }
 
-  public Totem update(Integer id, UpdateTotemDTO totemDetails) {
+  public Totem update(Integer id, UpdateTotemDTO totemDetails) throws InvalidReferenceException, BusinessRuleException {
     Totem totem = findById(id);
-    SupplyWarehouse supplyWarehouse = supplyWarehouseService.findById(totemDetails.supplyWarehouseID());
+    SupplyWarehouse supplyWarehouse;
+
+    try {
+      supplyWarehouse = supplyWarehouseService.findById(totemDetails.supplyWarehouseID());
+    } catch (EntityNotFoundException exception) {
+      throw new InvalidReferenceException("O almoxarifado informado não existe.");
+    }
 
     boolean isSameWarehouse = totem.getSupplyWarehouse().getId().equals(supplyWarehouse.getId());
     if (isSameWarehouse) throw new BusinessRuleException("O totem já está vinculado a este almoxarifado.");
