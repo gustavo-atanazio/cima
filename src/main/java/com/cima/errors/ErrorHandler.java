@@ -44,6 +44,15 @@ public class ErrorHandler {
     );
   }
 
+  @ExceptionHandler(BusinessRuleException.class)
+  public ResponseEntity<ErrorResponse> handleBusinessRule(BusinessRuleException exception) {
+    return buildResponse(
+      HttpStatus.BAD_REQUEST,
+      "Violação de regra de negócio", 
+      exception.getMessage()
+    );
+  }
+
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity<ErrorResponse> handleRuntime(RuntimeException exception) {
     return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno", exception.getMessage());
