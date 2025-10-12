@@ -1,17 +1,15 @@
-package com.cima.DTO;
+package com.cima.DTO.Employee;
 
 import java.util.List;
-
 import com.cima.models.Employee;
-import com.cima.models.Unit;
 
-public record EmployeeDTO(Integer id, String name, Integer accessLevel, List<Unit> units) {
+public record EmployeeDTO(Integer id, String name, Integer accessLevel, List<Integer> unitIDs) {
   public EmployeeDTO(Employee employee) {
     this(
       employee.getId(),
       employee.getName(),
       employee.getAccessLevel(),
-      employee.getUnits()
+      employee.getUnits().stream().map(unit -> unit.getId()).toList()
     );
   }
 }

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cima.DTO.EmployeeDTO;
+import com.cima.DTO.Employee.CreateEmployeeDTO;
+import com.cima.DTO.Employee.EmployeeDTO;
 import com.cima.models.Employee;
 import com.cima.services.EmployeeService;
 
@@ -42,7 +43,7 @@ public class EmployeeController {
   }
 
   @PostMapping
-  public ResponseEntity<EmployeeDTO> create(@RequestBody Employee employee) {
+  public ResponseEntity<EmployeeDTO> create(@RequestBody CreateEmployeeDTO employee) {
     Employee savedEmployee = service.create(employee);
 
     return ResponseEntity.ok(new EmployeeDTO(savedEmployee));
