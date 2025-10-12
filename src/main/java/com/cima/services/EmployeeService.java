@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.Employee.CreateEmployeeDTO;
+import com.cima.DTO.Employee.UpdateEmployeeDTO;
 import com.cima.errors.BusinessRuleException;
 import com.cima.errors.InvalidReferenceException;
 import com.cima.models.Employee;
@@ -55,12 +56,31 @@ public class EmployeeService {
     return repository.save(newEmployee);
   }
 
-  public Employee update(Integer id, Employee employeeDetails) {
-    Employee employee = findById(id);
+  public Employee update(Integer id, UpdateEmployeeDTO employeeDetails) {
+    Employee employee;
 
-    employee.setName(employeeDetails.getName());
-    employee.setAccessLevel(employeeDetails.getAccessLevel());
-    employee.setUnits(employeeDetails.getUnits());
+    try { employee = findById(id); }
+    catch (EntityNotFoundException exception) {
+      throw new InvalidReferenceException("O funcionário informado não existe.");
+    }
+
+    if (employeeDetails.accessLevel() < 1 || employeeDetails.accessLevel() > 3) {
+      throw new BusinessRuleException("Nível de acesso inválido. Deve ser entre 1 e 3.");
+    }
+
+    employee.setUnits(new ArrayList<>());
+
+    try {
+      employeeDetails.unitIDs().forEach(unitID -> {
+        Unit unit = unitService.findById(unitID);
+        employee.getUnits().add(unit);
+      });
+    } catch (EntityNotFoundException exception) {
+      throw new InvalidReferenceException("Unidade não encontrada para um dos IDs fornecidos.");
+    }
+
+    employee.setName(employeeDetails.name());
+    employee.setAccessLevel(employeeDetails.accessLevel());
 
     return repository.save(employee);
   }

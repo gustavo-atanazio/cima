@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.Employee.CreateEmployeeDTO;
 import com.cima.DTO.Employee.EmployeeDTO;
+import com.cima.DTO.Employee.UpdateEmployeeDTO;
 import com.cima.models.Employee;
 import com.cima.services.EmployeeService;
 
@@ -52,7 +53,7 @@ public class EmployeeController {
   @PutMapping("/{id}")
   public ResponseEntity<Void> update(
     @PathVariable Integer id,
-    @RequestBody Employee employeeDetails
+    @RequestBody UpdateEmployeeDTO employeeDetails
   ) {
     service.update(id, employeeDetails);
 
