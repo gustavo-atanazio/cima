@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -24,8 +25,10 @@ public class EmployeeService {
   @Autowired
   private UnitService unitService;
 
+  @Transactional(readOnly = true)
   public List<Employee> findAll() { return repository.findAll(); }
 
+  @Transactional(readOnly = true)
   public Employee findById(Integer id) {
     return repository
       .findById(id)
@@ -33,6 +36,7 @@ public class EmployeeService {
     ;
   }
 
+  @Transactional
   public Employee create(CreateEmployeeDTO employee) {
     if (employee.accessLevel() < 1 || employee.accessLevel() > 3) {
       throw new BusinessRuleException("Nível de acesso inválido. Deve ser entre 1 e 3.");
@@ -56,6 +60,7 @@ public class EmployeeService {
     return repository.save(newEmployee);
   }
 
+  @Transactional
   public Employee update(Integer id, UpdateEmployeeDTO employeeDetails) {
     Employee employee;
 
@@ -85,6 +90,7 @@ public class EmployeeService {
     return repository.save(employee);
   }
 
+  @Transactional
   public void delete(Integer id) {
     Employee employee = findById(id);
     repository.delete(employee);

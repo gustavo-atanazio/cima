@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -15,8 +16,10 @@ public class SupplyService {
   @Autowired
   private SupplyRepository repository;
 
+  @Transactional(readOnly = true)
   public List<Supply> findAll() { return repository.findAll(); }
 
+  @Transactional(readOnly = true)
   public Supply findById(Integer id) {
     return repository
       .findById(id)
@@ -24,8 +27,10 @@ public class SupplyService {
     ;
   }
 
+  @Transactional
   public Supply create(Supply supply) { return repository.save(supply); }
 
+  @Transactional
   public Supply update(Integer id, Supply supplyDetails) {
     Supply supply = findById(id);
 
@@ -38,6 +43,7 @@ public class SupplyService {
     return repository.save(supply);
   }
 
+  @Transactional
   public void delete(Integer id) {
     Supply supply = findById(id);
     repository.delete(supply);

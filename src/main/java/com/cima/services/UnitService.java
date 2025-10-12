@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -17,8 +18,10 @@ public class UnitService {
   @Autowired
   private UnitRepository repository;
 
+  @Transactional(readOnly = true)
   public List<Unit> findAll() { return repository.findAll(); }
 
+  @Transactional(readOnly = true)
   public Unit findById(Integer id) {
     return repository
       .findById(id)
@@ -26,6 +29,7 @@ public class UnitService {
     ;
   }
 
+  @Transactional
   public Unit create(CreateUnitDTO unit) {
     Unit newUnit = new Unit();
 
@@ -36,6 +40,7 @@ public class UnitService {
     return repository.save(newUnit);
   }
 
+  @Transactional
   public Unit update(Integer id, Unit unitDetails) {
     Unit unit = findById(id);
 
@@ -46,6 +51,7 @@ public class UnitService {
     return repository.save(unit);
   }
 
+  @Transactional
   public void delete(Integer id) {
     Unit unit = findById(id);
     repository.delete(unit);

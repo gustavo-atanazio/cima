@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -23,8 +24,10 @@ public class TotemService {
   @Autowired
   private SupplyWarehouseService supplyWarehouseService;
 
+  @Transactional(readOnly = true)
   public List<Totem> findAll() { return repository.findAll(); }
 
+  @Transactional(readOnly = true)
   public Totem findById(Integer id) {
     return repository
       .findById(id)
@@ -32,6 +35,7 @@ public class TotemService {
     ;
   }
 
+  @Transactional
   public Totem create(CreateTotemDTO totem) {
     SupplyWarehouse supplyWarehouse = supplyWarehouseService.findById(totem.supplyWarehouseID());
     Totem newTotem = new Totem();
@@ -41,6 +45,7 @@ public class TotemService {
     return repository.save(newTotem);
   }
 
+  @Transactional
   public Totem update(Integer id, UpdateTotemDTO totemDetails) throws InvalidReferenceException, BusinessRuleException {
     Totem totem = findById(id);
     SupplyWarehouse supplyWarehouse;
@@ -62,6 +67,7 @@ public class TotemService {
     return repository.save(totem);
   }
 
+  @Transactional
   public void delete(Integer id) {
     Totem totem = findById(id);
     repository.delete(totem);
