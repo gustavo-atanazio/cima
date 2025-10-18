@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.Unit.CreateUnitDTO;
+import com.cima.DTO.Unit.UpdateUnitDTO;
 import com.cima.models.Unit;
 import com.cima.repositories.UnitRepository;
 
@@ -41,12 +42,11 @@ public class UnitService {
   }
 
   @Transactional
-  public Unit update(Integer id, Unit unitDetails) {
+  public Unit update(Integer id, UpdateUnitDTO unitDetails) {
     Unit unit = findById(id);
 
-    unit.setCEP(unitDetails.getCEP());
-    unit.setNumber(unitDetails.getNumber());
-    unit.setEmployees(unitDetails.getEmployees());
+    unit.setCEP(unitDetails.CEP());
+    unit.setNumber(unitDetails.number());
 
     return repository.save(unit);
   }

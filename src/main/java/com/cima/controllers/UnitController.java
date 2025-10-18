@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.Unit.CreateUnitDTO;
 import com.cima.DTO.Unit.UnitDTO;
+import com.cima.DTO.Unit.UpdateUnitDTO;
 import com.cima.models.Unit;
 import com.cima.services.UnitService;
 
@@ -52,7 +53,7 @@ public class UnitController {
   @PutMapping("/{id}")
   public ResponseEntity<Void> update(
     @PathVariable Integer id,
-    @RequestBody Unit unitDetails
+    @RequestBody UpdateUnitDTO unitDetails
   ) {
     service.update(id, unitDetails);
 
