@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cima.DTO.SupplyMovementDTO;
+import com.cima.DTO.SupplyMovement.CreateSupplyMovementDTO;
+import com.cima.DTO.SupplyMovement.SupplyMovementDTO;
 import com.cima.models.SupplyMovement;
 import com.cima.services.SupplyMovementService;
 
@@ -42,7 +43,7 @@ public class SupplyMovementController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyMovementDTO> create(@RequestBody SupplyMovement movement) {
+  public ResponseEntity<SupplyMovementDTO> create(@RequestBody CreateSupplyMovementDTO movement) {
     SupplyMovement savedMovement = service.create(movement);
 
     return ResponseEntity.ok(new SupplyMovementDTO(savedMovement));
