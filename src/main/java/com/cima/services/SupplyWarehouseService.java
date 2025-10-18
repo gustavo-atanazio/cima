@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.SupplyWarehouse.CreateSupplyWarehouseDTO;
+import com.cima.DTO.SupplyWarehouse.UpdateSupplyWarehouseDTO;
+import com.cima.errors.BusinessRuleException;
 import com.cima.models.SupplyWarehouse;
 import com.cima.models.Unit;
 import com.cima.repositories.SupplyWarehouseRepository;
@@ -43,10 +45,14 @@ public class SupplyWarehouseService {
   }
 
   @Transactional
-  public SupplyWarehouse update(Integer id, SupplyWarehouse supplyWarehouseDetails) {
+  public SupplyWarehouse update(Integer id, UpdateSupplyWarehouseDTO supplyWarehouseDetails) {
     SupplyWarehouse supplyWarehouse = findById(id);
+    Unit unit = unitService.findById(supplyWarehouseDetails.unitID());
 
-    supplyWarehouse.setUnit(supplyWarehouseDetails.getUnit());
+    boolean isSameUnit = supplyWarehouse.getUnit().getId().equals(supplyWarehouseDetails.unitID());
+    if (isSameUnit) throw new BusinessRuleException("O almoxarifado já está vinculado a esta unidade.");
+
+    supplyWarehouse.setUnit(unit);
 
     return repository.save(supplyWarehouse);
   }
