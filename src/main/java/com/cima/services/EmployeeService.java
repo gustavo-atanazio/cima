@@ -11,7 +11,6 @@ import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.Employee.CreateEmployeeDTO;
 import com.cima.DTO.Employee.UpdateEmployeeDTO;
-import com.cima.errors.BusinessRuleException;
 import com.cima.errors.InvalidReferenceException;
 import com.cima.models.Employee;
 import com.cima.models.Unit;
@@ -38,10 +37,6 @@ public class EmployeeService {
 
   @Transactional
   public Employee create(CreateEmployeeDTO employee) {
-    if (employee.accessLevel() < 1 || employee.accessLevel() > 3) {
-      throw new BusinessRuleException("Nível de acesso inválido. Deve ser entre 1 e 3.");
-    }
-
     Employee newEmployee = new Employee();
     newEmployee.setUnits(new ArrayList<>());
 
@@ -67,10 +62,6 @@ public class EmployeeService {
     try { employee = findById(id); }
     catch (EntityNotFoundException exception) {
       throw new InvalidReferenceException("O funcionário informado não existe.");
-    }
-
-    if (employeeDetails.accessLevel() < 1 || employeeDetails.accessLevel() > 3) {
-      throw new BusinessRuleException("Nível de acesso inválido. Deve ser entre 1 e 3.");
     }
 
     employee.setUnits(new ArrayList<>());

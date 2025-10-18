@@ -12,7 +12,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import com.cima.errors.BusinessRuleException;
 
 @Entity @Table(name = "supply_warehouse")
 @NoArgsConstructor @AllArgsConstructor @Getter
@@ -22,6 +23,13 @@ public class SupplyWarehouse {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "unit_id", foreignKey = @ForeignKey(name = "fk_supply_warehouse_unit"))
-  @Setter
   private Unit unit;
+
+  public void setUnit(Unit newUnit) {
+    if (this.unit != null && this.unit.getId().equals(newUnit.getId())) {
+      throw new BusinessRuleException("O almoxarifado já está vinculado a esta unidade.");
+    }
+
+    this.unit = newUnit;
+  }
 }

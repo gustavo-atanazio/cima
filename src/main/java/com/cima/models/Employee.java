@@ -15,18 +15,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.cima.errors.BusinessRuleException;
+
 @Entity @Table(name = "employee")
 @NoArgsConstructor @AllArgsConstructor @Getter
 public class Employee {
+  public static final byte MIN_ACCESS_LEVEL = 1;
+  public static final byte MAX_ACCESS_LEVEL = 3;
+
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(nullable = false) @Setter
   private String name;
 
-  @Column(name = "access_level", nullable = false) @Setter
+  @Column(name = "access_level", nullable = false)
   private Integer accessLevel;
 
   @ManyToMany(mappedBy = "employees") @Setter
   private List<Unit> units;
+
+  public void setAccessLevel(Integer accessLevel) {
+    if (accessLevel < MIN_ACCESS_LEVEL || accessLevel > MAX_ACCESS_LEVEL) {
+      throw new BusinessRuleException("Nível de acesso inválido. Deve ser entre 1 e 3.");
+    }
+    
+    this.accessLevel = accessLevel;
+  }
 }

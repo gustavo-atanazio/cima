@@ -10,7 +10,6 @@ import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.Totem.CreateTotemDTO;
 import com.cima.DTO.Totem.UpdateTotemDTO;
-import com.cima.errors.BusinessRuleException;
 import com.cima.errors.InvalidReferenceException;
 import com.cima.models.SupplyWarehouse;
 import com.cima.models.Totem;
@@ -38,15 +37,16 @@ public class TotemService {
   @Transactional
   public Totem create(CreateTotemDTO totem) {
     SupplyWarehouse supplyWarehouse = supplyWarehouseService.findById(totem.supplyWarehouseID());
+    boolean warehouseAlreadyUsed = repository.existsBySupplyWarehouse(supplyWarehouse);
     Totem newTotem = new Totem();
 
-    newTotem.setSupplyWarehouse(supplyWarehouse);
+    newTotem.setSupplyWarehouse(supplyWarehouse, warehouseAlreadyUsed);
 
     return repository.save(newTotem);
   }
 
   @Transactional
-  public Totem update(Integer id, UpdateTotemDTO totemDetails) throws InvalidReferenceException, BusinessRuleException {
+  public Totem update(Integer id, UpdateTotemDTO totemDetails) throws InvalidReferenceException {
     Totem totem = findById(id);
     SupplyWarehouse supplyWarehouse;
 
@@ -56,13 +56,8 @@ public class TotemService {
       throw new InvalidReferenceException("O almoxarifado informado não existe.");
     }
 
-    boolean isSameWarehouse = totem.getSupplyWarehouse().getId().equals(supplyWarehouse.getId());
-    if (isSameWarehouse) throw new BusinessRuleException("O totem já está vinculado a este almoxarifado.");
-
     boolean warehouseAlreadyUsed = repository.existsBySupplyWarehouse(supplyWarehouse);
-    if (warehouseAlreadyUsed) throw new BusinessRuleException("Não é possível atribuir o totem a um almoxarifado que já possui outro totem.");
-
-    totem.setSupplyWarehouse(supplyWarehouse);
+    totem.setSupplyWarehouse(supplyWarehouse, warehouseAlreadyUsed);
 
     return repository.save(totem);
   }
