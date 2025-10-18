@@ -1,4 +1,4 @@
-package com.cima.DTO;
+package com.cima.DTO.Supply;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ public record SupplyDTO(
   String name,
   Integer lotNumber,
   Integer quantity,
-  List<SupplyWarehouse> supplyWarehouses,
-  List<SupplyMovement> supplyMovements
+  List<Integer> supplyWarehouseIDs,
+  List<Integer> supplyMovementIDs
 ) {
   public SupplyDTO(Supply supply) {
     this(
@@ -20,8 +20,12 @@ public record SupplyDTO(
       supply.getName(),
       supply.getLotNumber(),
       supply.getQuantity(),
-      supply.getSupplyWarehouses(),
-      supply.getSupplyMovements()
+      supply.getSupplyWarehouses().stream()
+        .map(SupplyWarehouse::getId)
+        .toList(),
+      supply.getSupplyMovements().stream()
+        .map(SupplyMovement::getId)
+        .toList()
     );
   }
 }
