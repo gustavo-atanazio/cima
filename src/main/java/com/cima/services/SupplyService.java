@@ -1,5 +1,6 @@
 package com.cima.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import com.cima.DTO.Supply.CreateSupplyDTO;
 import com.cima.models.Supply;
 import com.cima.repositories.SupplyRepository;
 
@@ -28,7 +30,17 @@ public class SupplyService {
   }
 
   @Transactional
-  public Supply create(Supply supply) { return repository.save(supply); }
+  public Supply create(CreateSupplyDTO supply) {
+    Supply newSupply = new Supply();
+
+    newSupply.setName(supply.name());
+    newSupply.setLotNumber(supply.lotNumber());
+    newSupply.setQuantity(0);
+    newSupply.setSupplyWarehouses(new ArrayList<>());
+    newSupply.setSupplyMovements(new ArrayList<>());
+
+    return repository.save(newSupply);
+  }
 
   @Transactional
   public Supply update(Integer id, Supply supplyDetails) {

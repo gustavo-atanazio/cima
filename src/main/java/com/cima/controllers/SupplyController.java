@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cima.DTO.Supply.CreateSupplyDTO;
 import com.cima.DTO.Supply.SupplyDTO;
 import com.cima.models.Supply;
 import com.cima.services.SupplyService;
@@ -42,7 +43,7 @@ public class SupplyController {
   }
 
   @PostMapping
-  public ResponseEntity<SupplyDTO> create(@RequestBody Supply supply) {
+  public ResponseEntity<SupplyDTO> create(@RequestBody CreateSupplyDTO supply) {
     Supply savedSupply = service.create(supply);
 
     return ResponseEntity.ok(new SupplyDTO(savedSupply));
