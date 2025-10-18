@@ -10,13 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.Supply.CreateSupplyDTO;
+import com.cima.DTO.Supply.UpdateSupplyDTO;
+import com.cima.errors.InvalidReferenceException;
 import com.cima.models.Supply;
+import com.cima.models.SupplyMovement;
+import com.cima.models.SupplyWarehouse;
 import com.cima.repositories.SupplyRepository;
 
 @Service
 public class SupplyService {
   @Autowired
   private SupplyRepository repository;
+
+  @Autowired
+  private SupplyWarehouseService supplyWarehouseService;
+
+  @Autowired
+  private SupplyMovementService supplyMovementService;
 
   @Transactional(readOnly = true)
   public List<Supply> findAll() { return repository.findAll(); }
@@ -43,14 +53,35 @@ public class SupplyService {
   }
 
   @Transactional
-  public Supply update(Integer id, Supply supplyDetails) {
+  public Supply update(Integer id, UpdateSupplyDTO supplyDetails) {
     Supply supply = findById(id);
+    List<SupplyWarehouse> updatedSupplyWarehouses = new ArrayList<>();
+    List<SupplyMovement> updatedSupplyMovements = new ArrayList<>();
 
-    supply.setName(supplyDetails.getName());
-    supply.setLotNumber(supplyDetails.getLotNumber());
-    supply.setQuantity(supplyDetails.getQuantity());
-    supply.setSupplyWarehouses(supplyDetails.getSupplyWarehouses());
-    supply.setSupplyMovements(supplyDetails.getSupplyMovements());
+    supply.setName(supplyDetails.name());
+    supply.setLotNumber(supplyDetails.lotNumber());
+    supply.setQuantity(supplyDetails.quantity());
+
+    supplyDetails.supplyWarehouseIDs().forEach(warehouseID -> {
+      try {
+        SupplyWarehouse supplyWarehouse = supplyWarehouseService.findById(warehouseID);
+        updatedSupplyWarehouses.add(supplyWarehouse);
+      } catch (EntityNotFoundException exception) {
+        throw new InvalidReferenceException(exception.getMessage());
+      }
+    });
+
+    supplyDetails.supplyMovementIDs().forEach(movementID -> {
+      try {
+        SupplyMovement movement = supplyMovementService.findById(movementID);
+        updatedSupplyMovements.add(movement);
+      } catch (EntityNotFoundException exception) {
+        throw new InvalidReferenceException(exception.getMessage());
+      }
+    });
+
+    supply.setSupplyWarehouses(updatedSupplyWarehouses);
+    supply.setSupplyMovements(updatedSupplyMovements);
 
     return repository.save(supply);
   }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.Supply.CreateSupplyDTO;
 import com.cima.DTO.Supply.SupplyDTO;
+import com.cima.DTO.Supply.UpdateSupplyDTO;
 import com.cima.models.Supply;
 import com.cima.services.SupplyService;
 
@@ -52,7 +53,7 @@ public class SupplyController {
   @PutMapping("/{id}")
   public ResponseEntity<Void> update(
     @PathVariable Integer id,
-    @RequestBody Supply supplyDetails
+    @RequestBody UpdateSupplyDTO supplyDetails
   ) {
     service.update(id, supplyDetails);
 
