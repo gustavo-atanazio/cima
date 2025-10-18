@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.cima.DTO.SupplyMovement.CreateSupplyMovementDTO;
+import com.cima.DTO.SupplyMovement.UpdateSupplyMovementDTO;
 import com.cima.errors.InvalidReferenceException;
 import com.cima.models.Employee;
 import com.cima.models.Supply;
@@ -67,14 +68,25 @@ public class SupplyMovementService {
   }
 
   @Transactional
-  public SupplyMovement update(Integer id, SupplyMovement movementDetails) {
+  public SupplyMovement update(Integer id, UpdateSupplyMovementDTO movementDetails) {
     SupplyMovement movement = findById(id);
+    Totem totem = new Totem();
+    Employee employee = new Employee();
+    Supply supply = new Supply();
 
-    movement.setDate(movementDetails.getDate());
-    movement.setTotem(movementDetails.getTotem());
-    movement.setEmployee(movementDetails.getEmployee());
-    movement.setSupply(movementDetails.getSupply());
-    movement.setQuantity(movementDetails.getQuantity());
+    try {
+      totem = totemService.findById(movementDetails.totemID());
+      employee = employeeService.findById(movementDetails.employeeID());
+      supply = supplyService.findById(movementDetails.supplyID());
+    } catch (EntityNotFoundException exception) {
+      throw new InvalidReferenceException(exception.getMessage());
+    }
+
+    movement.setDate(movementDetails.date());
+    movement.setTotem(totem);
+    movement.setEmployee(employee);
+    movement.setSupply(supply);
+    movement.setQuantity(movementDetails.quantity());
 
     return repository.save(movement);
   }

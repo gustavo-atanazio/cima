@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cima.DTO.SupplyMovement.CreateSupplyMovementDTO;
 import com.cima.DTO.SupplyMovement.SupplyMovementDTO;
+import com.cima.DTO.SupplyMovement.UpdateSupplyMovementDTO;
 import com.cima.models.SupplyMovement;
 import com.cima.services.SupplyMovementService;
 
@@ -52,7 +53,7 @@ public class SupplyMovementController {
   @PutMapping("/{id}")
   public ResponseEntity<Void> update(
     @PathVariable Integer id,
-    @RequestBody SupplyMovement movementDetails
+    @RequestBody UpdateSupplyMovementDTO movementDetails
   ) {
     service.update(id, movementDetails);
 
