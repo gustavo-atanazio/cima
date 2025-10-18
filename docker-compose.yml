@@ -25,5 +25,21 @@ services:
     depends_on:
       - postgres
 
+  app:
+    build: .
+    container_name: cima-app
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cima
+      SPRING_DATASOURCE_USERNAME: cima_user
+      SPRING_DATASOURCE_PASSWORD: cima_password
+
+    depends_on:
+      - postgres
+      - flyway
+
 volumes:
   postgres_data:
