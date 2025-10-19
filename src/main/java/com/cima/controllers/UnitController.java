@@ -1,5 +1,6 @@
 package com.cima.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class UnitController {
   public ResponseEntity<UnitDTO> create(@RequestBody CreateUnitDTO unit) {
     Unit savedUnit = service.create(unit);
 
-    return ResponseEntity.ok(new UnitDTO(savedUnit));
+    URI location = URI.create(String.format("/units/%d", savedUnit.getId()));
+
+    return ResponseEntity.created(location).body(new UnitDTO(savedUnit));
   }
 
   @PutMapping("/{id}")

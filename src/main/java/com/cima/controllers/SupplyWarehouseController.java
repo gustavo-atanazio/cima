@@ -1,5 +1,6 @@
 package com.cima.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class SupplyWarehouseController {
   public ResponseEntity<SupplyWarehouseDTO> create(@RequestBody CreateSupplyWarehouseDTO supplyWarehouse) {
     SupplyWarehouse savedSupplyWarehouse = service.create(supplyWarehouse);
 
-    return ResponseEntity.ok(new SupplyWarehouseDTO(savedSupplyWarehouse));
+    URI location = URI.create(String.format("/supply-warehouses/%d", savedSupplyWarehouse.getId()));
+
+    return ResponseEntity.created(location).body(new SupplyWarehouseDTO(savedSupplyWarehouse));
   }
 
   @PutMapping("/{id}")

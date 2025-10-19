@@ -1,5 +1,6 @@
 package com.cima.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class EmployeeController {
   public ResponseEntity<EmployeeDTO> create(@RequestBody CreateEmployeeDTO employee) {
     Employee savedEmployee = service.create(employee);
 
-    return ResponseEntity.ok(new EmployeeDTO(savedEmployee));
+    URI location = URI.create(String.format("/employees/%d", savedEmployee.getId()));
+
+    return ResponseEntity.created(location).body(new EmployeeDTO(savedEmployee));
   }
 
   @PutMapping("/{id}")

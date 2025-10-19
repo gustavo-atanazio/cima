@@ -1,5 +1,6 @@
 package com.cima.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class SupplyController {
   public ResponseEntity<SupplyDTO> create(@RequestBody CreateSupplyDTO supply) {
     Supply savedSupply = service.create(supply);
 
-    return ResponseEntity.ok(new SupplyDTO(savedSupply));
+    URI location = URI.create(String.format("/supplies/%d", savedSupply.getId()));
+
+    return ResponseEntity.created(location).body(new SupplyDTO(savedSupply));
   }
 
   @PutMapping("/{id}")

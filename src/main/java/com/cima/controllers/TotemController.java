@@ -1,5 +1,6 @@
 package com.cima.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ public class TotemController {
   public ResponseEntity<TotemDTO> create(@RequestBody CreateTotemDTO totem) {
     Totem savedTotem = service.create(totem);
 
-    return ResponseEntity.ok(new TotemDTO(savedTotem));
+    URI location = URI.create(String.format("/totems/%d", savedTotem.getId()));
+
+    return ResponseEntity.created(location).body(new TotemDTO(savedTotem));
   }
 
   @PutMapping("/{id}")
