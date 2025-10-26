@@ -17,6 +17,7 @@ import com.cima.models.Supply;
 import com.cima.models.SupplyMovement;
 import com.cima.models.Totem;
 import com.cima.repositories.SupplyMovementRepository;
+import com.cima.repositories.SupplyRepository;
 
 @Service
 public class SupplyMovementService {
@@ -30,7 +31,7 @@ public class SupplyMovementService {
   private EmployeeService employeeService;
 
   @Autowired
-  private SupplyService supplyService;
+  private SupplyRepository supplyRepository;
 
   @Transactional(readOnly = true)
   public List<SupplyMovement> findAll() { return repository.findAll(); }
@@ -53,7 +54,9 @@ public class SupplyMovementService {
     try {
       totem = totemService.findById(movement.totemID());
       employee = employeeService.findById(movement.employeeID());
-      supply = supplyService.findById(movement.supplyID());
+      supply = supplyRepository.findById(movement.supplyID())
+        .orElseThrow(() -> new EntityNotFoundException("Insumo não encontrado para o ID: " + movement.supplyID()))
+      ;
     } catch (EntityNotFoundException exception) {
       throw new InvalidReferenceException(exception.getMessage());
     }
@@ -77,7 +80,9 @@ public class SupplyMovementService {
     try {
       totem = totemService.findById(movementDetails.totemID());
       employee = employeeService.findById(movementDetails.employeeID());
-      supply = supplyService.findById(movementDetails.supplyID());
+      supply = supplyRepository.findById(movementDetails.supplyID())
+        .orElseThrow(() -> new EntityNotFoundException("Insumo não encontrado para o ID: " + movementDetails.supplyID()))
+      ;
     } catch (EntityNotFoundException exception) {
       throw new InvalidReferenceException(exception.getMessage());
     }
